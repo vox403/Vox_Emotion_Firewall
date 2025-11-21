@@ -31,7 +31,7 @@
       overflow-y: auto;
     }
 
-    /* 데스크톱에서 전체 UI 확대 */
+    /* 전체 UI 확대 */
     @media (min-width: 900px) {
       #app {
         transform: scale(1.15);
@@ -438,7 +438,7 @@
       letter-spacing: 0.12em;
     }
 
-    /* CAM 1–3 */
+    /* 카메라 (1, 2, 3번) */
     .screen-cam1 {
       background: radial-gradient(circle at 20% 10%, #ffcf7b22, transparent 50%),
                   radial-gradient(circle at 80% 20%, #ff7b7b33, transparent 50%),
@@ -506,7 +506,7 @@
       pointer-events: none;
     }
 
-    /* 노이즈 카메라 (4,5) */
+    /* 카메라 (4, 5번) */
     .screen-noise {
       background:
         radial-gradient(circle at 20% 30%, #ffffff10, transparent 40%),
@@ -540,7 +540,7 @@
       100% { transform: translate(0,0); }
     }
 
-    /* CAM 6 – 알래스터 */
+    /* 카메라 (6번-알래스터 전용) */
     .screen-cam6 {
       background: linear-gradient(135deg, #2e0008, #6c0016, #150001);
       position: relative;
@@ -575,7 +575,7 @@
       100% { transform: translate(0,0); }
     }
 
-    /* CAM 7 – Pentagram City skyline */
+    /* 카메라 (7번) */
     .screen-cam7 {
       background:
         radial-gradient(circle at 20% 10%, #ffb3ff33, transparent 55%),
@@ -599,7 +599,7 @@
       pointer-events: none;
     }
 
-    /* CAM 8 – Hazbin Hotel lobby */
+    /* 카메라 (8번) */
     .screen-cam8 {
       background:
         radial-gradient(circle at 20% 20%, #ffddaa33, transparent 55%),
@@ -809,7 +809,7 @@
           transparent 1px,
           transparent 4px
         ),
-        /* 2. 전체 붉은 틴트 */
+        /* 2. 전체 붉은 면 */
         linear-gradient(
           0deg,
           rgba(130, 0, 20, 0.6),
@@ -842,7 +842,7 @@
       border-top: 1px dashed #333;
       font-size: 12px;
       position: relative;
-      z-index: 3; /* 텍스트가 너무 죽지 않도록 약간 올림 */
+      z-index: 3;
     }
 
     .desc-en { color: #7fd0ff; margin-bottom: 3px; }
@@ -947,14 +947,14 @@
 
       // 폭주
       frenzy: {
-        en: "VoxTek alert: Fuck Hell, fuck Heaven, and fuck all of you. As long as I wipe that smile off Alastor's fucking face, I don’t care what happens.",
-        ko: "VoxTek 경고: 지옥도 좆같고, 천국도 좆같고, 너희 전부 다 엿먹어. 알래스터 그 좆같은 얼굴에서 웃음만 지울 수만 있다면… 그 다음엔 뭐가 박살나든 좆도 상관없어."
+        en: "VoxTek alert: Fuck Hell! Fuck Heaven! And fuck all of you! As long as I wipe that smile off Alastor's fucking face, I don't care happens...! HAHAHAHAHA!!",
+        ko: "VoxTek 경고: 지옥도 좆까! 천국도 좆까! 그리고 니들도 다 좆까라 그래! 알래스터 그 빌어먹을 자식의 웃는 망할 얼굴을 날려버리는 꼴만 볼 수 있다면, 난 아무 상관 없어...! 하하하하하!!!"
       },
 
       // 불안
       anxiety: {
-        en: "VoxTek status: I can process infinity, but not the bullshit reason you make my signal shake.",
-        ko: "VoxTek 상태: 난 무한한 데이터를 처리하면서도, 네가 내 신호를 흔들어대는 이 좆같은 이유는 처리하지 못했어."
+        en: "VoxTek status: ...How's my approval rating?",
+        ko: "VoxTek 상태: ...지금 나 지지율 몇%야?"
       },
 
       // 오만
@@ -978,7 +978,7 @@
       // 해즈빈호텔
       hazbin: {
         en: "VoxTek scan: That hotel’s whole ‘redemption’ shtick is adorable—still useless as fuck.",
-        ko: "VoxTek 스캔: 그 호텔의 그 ‘구원’ 지랄, 아주 귀엽네—그래봤자 좆도 쓸모 없지만."
+        ko: "VoxTek 스캔: 그 호텔의 그 ‘구원’ 지랄, 아주 귀엽네——그래봤자 좆도 쓸모 없지만."
       },
 
       // 지옥
@@ -1013,8 +1013,8 @@
 
       // 찰리
       charlie: {
-        en: "VoxTek sentiment filter: Charlie’s optimism is so blinding I have to dim my own fucking screen.",
-        ko: "VoxTek 감정 필터: 찰리의 낙관은 너무 눈부셔서, 내가 내 화면 밝기를 줄여야 할 지경이야."
+        en: "VoxTek sentiment filter: Charlie Morningstar’s optimism is so blinding I have to dim my own fucking screen.",
+        ko: "VoxTek 감정 필터: 찰리 모닝스타의 낙관은 너무 눈부셔서, 내가 내 화면 밝기를 줄여야 할 지경이야."
       },
 
       // 루시퍼
@@ -1299,9 +1299,12 @@ End of Report
             🕶 Director · <span>V-Sync</span>
           </div>
           <div class="creator-sub">
-            ──Thank you for taking an interest in the creator.
-          </div>
-        </div>
+  ── Interest in the creator detected.<br>
+  ── 창작자에 대한 관심 신호 감지.<br><br>
+  ── Acknowledgment signal transmitted. Thank you.<br>
+  ── 확인 응답 전송 완료. 감사합니다.
+</div>
+
       `;
     }
 
