@@ -11,6 +11,13 @@
       --vox-card-bg: #05060d;
       --vox-text: #e5e5e5;
       --error-red: #ff3150;
+
+      /* 로딩 화면용 공통 색상 */
+      --accent: var(--vox-blue);
+      --accent-soft: #2ca8ff;
+      --accent-pink: #ff4af8;
+      --text-sub: #9ca3af;
+      --border-soft: #1f2937;
     }
 
     * {
@@ -39,126 +46,84 @@
       }
     }
 
-    /* 부팅 화면 */
-    #boot-screen {
+    /* ===== VOXTEK ACCESS PROTOCOL 로딩 화면 ===== */
+    #loading-screen {
       position: fixed;
       inset: 0;
-      background: #020308;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      z-index: 999;
-      color: var(--vox-blue);
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+      font-family: Consolas, monospace;
+      transition: opacity 0.4s ease;
+    }
+
+    .loading-box {
+      border: 1px solid var(--accent-soft);
+      background: rgba(3, 7, 18, 0.9);
+      padding: 2.5rem 3rem;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 0 35px rgba(0, 247, 255, 0.35);
+      border-radius: 0.75rem;
+    }
+
+    .loading-title {
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 12px;
-      animation: boot-fade 1s ease-out 2.6s forwards;
+      color: var(--accent);
+      margin-bottom: 1rem;
     }
 
-    #boot-logo {
-      font-size: 24px;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px rgba(70, 185, 255, 0.9),
-                   0 0 25px rgba(70, 185, 255, 0.5);
+    .loading-line {
+      margin: 0.4rem 0;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    #boot-sub {
-      color: #888;
-      margin-bottom: 18px;
+    .loading-line.active {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    #boot-bar {
-      width: 240px;
+    .loading-line .en {
+      display: block;
+    }
+
+    .loading-line .ko {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    .loading-progress {
+      margin-top: 1.2rem;
       height: 3px;
-      background: #11141c;
+      width: 100%;
+      background: #020617;
       overflow: hidden;
-      box-shadow: 0 0 12px rgba(0,0,0,0.8);
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
     }
 
-    #boot-bar-fill {
+    .loading-progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, transparent, var(--vox-blue-soft), transparent);
-      animation: boot-line 2s linear infinite;
+      width: 30%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-pink));
+      animation: loading-scan 1.2s linear infinite;
     }
 
-    @keyframes boot-line {
-      0%   { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    @keyframes boot-fade {
-      to {
-        opacity: 0;
-        pointer-events: none;
-        visibility: hidden;
+    @keyframes loading-scan {
+      0% {
+        transform: translateX(-120%);
       }
-    }
-
-    /* 알래스터 플래시 + 흔들림 */
-    .alastor-flash {
-      animation: alastor-flash 0.55s ease-out;
-    }
-
-    @keyframes alastor-flash {
-      0%   { background-color: rgba(120, 0, 20, 0.65); }
-      40%  { background-color: rgba(255, 0, 60, 0.35); }
-      100% { background-color: transparent; }
-    }
-
-    .shake {
-      animation: shake-card 0.35s linear;
-    }
-
-    @keyframes shake-card {
-      0%   { transform: translateX(0); }
-      20%  { transform: translateX(-3px); }
-      40%  { transform: translateX(3px); }
-      60%  { transform: translateX(-2px); }
-      80%  { transform: translateX(2px); }
-      100% { transform: translateX(0); }
-    }
-
-    /* 폭주 전용 이펙트 - 카드 살짝 기울어짐 */
-    .frenzy-mode {
-      position: relative;
-      animation: frenzy-skew 0.18s alternate infinite;
-    }
-
-    @keyframes frenzy-skew {
-      0%   { transform: skew(-0.5deg) translate(0px, 0px); }
-      50%  { transform: skew(1.2deg) translate(1px, -2px); }
-      100% { transform: skew(-1.5deg) translate(-1px, 1px); }
-    }
-
-    @keyframes frenzy-glitch {
-      0%   { transform: translate(0,0); }
-      50%  { transform: translate(-2px,1px); }
-      100% { transform: translate(1px,-1px); }
-    }
-
-    /* 폭주 전체 배경 펄스 */
-    body.frenzy-bg {
-      animation: frenzyPulse 0.8s ease-in-out 0s 6;
-    }
-
-    @keyframes frenzyPulse {
-      0%   { background-color: #05050a; }
-      50%  { background-color: #24000a; }
-      100% { background-color: #05050a; }
-    }
-
-    /* 폭주 텍스트 잔떨림 */
-    .frenzy-text {
-      animation: jitter 0.05s infinite;
-    }
-
-    @keyframes jitter {
-      0%   { transform: translate(0,0); }
-      25%  { transform: translate(-1px,1px); }
-      50%  { transform: translate(1px,-1px); }
-      75%  { transform: translate(-1px,-1px); }
-      100% { transform: translate(1px,1px); }
+      100% {
+        transform: translateX(260%);
+      }
     }
 
     /* 메인 앱 레이아웃 */
@@ -169,6 +134,12 @@
       align-items: center;
       width: 100%;
       padding: 18px 10px 30px;
+      opacity: 0;              /* 로딩 끝날 때까지 숨기기 */
+      transition: opacity 0.4s ease;
+    }
+
+    #app.active {
+      opacity: 1;
     }
 
     /* 상단 좌측 버튼 줄 */
@@ -364,6 +335,72 @@
       margin-bottom: 12px;
       text-transform: uppercase;
       text-align: center;
+    }
+
+    /* 알래스터 플래시 + 흔들림 */
+    .alastor-flash {
+      animation: alastor-flash 0.55s ease-out;
+    }
+
+    @keyframes alastor-flash {
+      0%   { background-color: rgba(120, 0, 20, 0.65); }
+      40%  { background-color: rgba(255, 0, 60, 0.35); }
+      100% { background-color: transparent; }
+    }
+
+    .shake {
+      animation: shake-card 0.35s linear;
+    }
+
+    @keyframes shake-card {
+      0%   { transform: translateX(0); }
+      20%  { transform: translateX(-3px); }
+      40%  { transform: translateX(3px); }
+      60%  { transform: translateX(-2px); }
+      80%  { transform: translateX(2px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* 폭주 전용 이펙트 - 카드 살짝 기울어짐 */
+    .frenzy-mode {
+      position: relative;
+      animation: frenzy-skew 0.18s alternate infinite;
+    }
+
+    @keyframes frenzy-skew {
+      0%   { transform: skew(-0.5deg) translate(0px, 0px); }
+      50%  { transform: skew(1.2deg) translate(1px, -2px); }
+      100% { transform: skew(-1.5deg) translate(-1px, 1px); }
+    }
+
+    @keyframes frenzy-glitch {
+      0%   { transform: translate(0,0); }
+      50%  { transform: translate(-2px,1px); }
+      100% { transform: translate(1px,-1px); }
+    }
+
+    /* 폭주 전체 배경 펄스 */
+    body.frenzy-bg {
+      animation: frenzyPulse 0.8s ease-in-out 0s 6;
+    }
+
+    @keyframes frenzyPulse {
+      0%   { background-color: #05050a; }
+      50%  { background-color: #24000a; }
+      100% { background-color: #05050a; }
+    }
+
+    /* 폭주 텍스트 잔떨림 */
+    .frenzy-text {
+      animation: jitter 0.05s infinite;
+    }
+
+    @keyframes jitter {
+      0%   { transform: translate(0,0); }
+      25%  { transform: translate(-1px,1px); }
+      50%  { transform: translate(1px,1px); }
+      75%  { transform: translate(-1px,-1px); }
+      100% { transform: translate(1px,1px); }
     }
 
     /* AUX 패널 */
@@ -941,11 +978,30 @@
   </style>
 </head>
 <body>
-  <!-- boot stub · quick mock -->
-  <div id="boot-screen">
-    <div id="boot-logo">VOXTEK</div>
-    <div id="boot-sub">BOOTING EMOTION FIREWALL...</div>
-    <div id="boot-bar"><div id="boot-bar-fill"></div></div>
+  <!-- VOXTEK ACCESS PROTOCOL 로딩 화면 -->
+  <div id="loading-screen">
+    <div class="loading-box">
+      <div class="loading-title">VOXTEK ACCESS PROTOCOL</div>
+      <div class="loading-line" data-step="0">
+        <span class="en">Scanning User Credentials…</span>
+        <span class="ko">사용자 인증 정보를 스캔하는 중…</span>
+      </div>
+      <div class="loading-line" data-step="1">
+        <span class="en">Verifying Access Level…</span>
+        <span class="ko">접근 권한을 검증하는 중…</span>
+      </div>
+      <div class="loading-line" data-step="2">
+        <span class="en">All Checks Passed.</span>
+        <span class="ko">모든 체크 통과.</span>
+      </div>
+      <div class="loading-line" data-step="3">
+        <span class="en">…Clear. Access Granted.</span>
+        <span class="ko">…클리어. 접근 승인.</span>
+      </div>
+      <div class="loading-progress">
+        <div class="loading-progress-bar"></div>
+      </div>
+    </div>
   </div>
 
   <div id="app">
@@ -1390,10 +1446,10 @@ End of Report
             🕶 Director · <span>V-Sync</span>
           </div>
           <div class="creator-sub">
-            ── Interest in the creator detected.<br>
-            ── 창작자에 대한 관심 신호 감지.<br><br>
-            ── Acknowledgment signal transmitted. Thank you.<br>
-            ── 확인 응답 전송 완료. 감사합니다.
+            ── 「Interest in the creator detected。」<br>
+            ── 「창작자에 대한 관심 신호 감지。」<br><br>
+            ── 「Acknowledgment signal transmitted。Thank you。」<br>
+            ── 「확인 응답 전송 완료。감사합니다。」
           </div>
         </div>
       `;
@@ -1548,8 +1604,45 @@ End of Report
       if (!withinPanel && !withinButtons) closePanel();
     });
 
-    // 부팅 후 상태 초기화
-    setTimeout(() => { setStatus("idle"); }, 2700);
+    /* ====== VOXTEK ACCESS PROTOCOL 로딩 시퀀스 ====== */
+    (function () {
+      const lines = document.querySelectorAll(".loading-line");
+      const loadingScreen = document.getElementById("loading-screen");
+      const app = document.getElementById("app");
+      let step = 0;
+
+      function showStep() {
+        if (step < lines.length) {
+          lines[step].classList.add("active");
+          step++;
+          setTimeout(showStep, 900);
+        } else {
+          // 마지막 문구까지 다 나온 후, 상태를 IDLE로 세팅하고 화면 전환
+          setStatus("idle");
+
+          setTimeout(() => {
+            if (loadingScreen) {
+              loadingScreen.style.opacity = "0";
+              loadingScreen.style.pointerEvents = "none";
+              setTimeout(() => {
+                loadingScreen.style.display = "none";
+                if (app) app.classList.add("active");
+              }, 400);
+            } else {
+              if (app) app.classList.add("active");
+            }
+          }, 900);
+        }
+      }
+
+      if (lines.length && loadingScreen && app) {
+        showStep();
+      } else {
+        // 혹시 로딩 화면이 없으면 바로 앱 표시
+        if (app) app.classList.add("active");
+        setStatus("idle");
+      }
+    })();
   </script>
 </body>
 </html>
