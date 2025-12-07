@@ -7,7 +7,6 @@
     :root {
       --vox-blue: #46b9ff;
       --vox-blue-soft: #2ca8ff;
-      --vox-bg: #020308;
       --vox-card-bg: #05060d;
       --vox-text: #e5e5e5;
       --error-red: #ff3150;
@@ -46,7 +45,7 @@
       }
     }
 
-    /* ===== V-CYNC ACCESS PROTOCOL 로딩 화면 ===== */
+    /* 로딩 */
     #loading-screen {
       position: fixed;
       inset: 0;
@@ -134,7 +133,7 @@
       align-items: center;
       width: 100%;
       padding: 18px 10px 30px;
-      opacity: 0;              /* 로딩 끝날 때까지 숨기기 */
+      opacity: 0;  
       transition: opacity 0.4s ease;
     }
 
@@ -242,7 +241,7 @@
       flex: 1;
     }
 
-    /* ESS 바 (Emotional Signal Spectrum) */
+    /* ESS */
     .ess-bar {
       width: 90%;
       max-width: 760px;
@@ -337,7 +336,6 @@
       text-align: center;
     }
 
-    /* 알래스터 플래시 + 흔들림 */
     .alastor-flash {
       animation: alastor-flash 0.55s ease-out;
     }
@@ -361,7 +359,7 @@
       100% { transform: translateX(0); }
     }
 
-    /* 폭주 전용 이펙트 - 카드 살짝 기울어짐 */
+    /* 폭주 */
     .frenzy-mode {
       position: relative;
       animation: frenzy-skew 0.18s alternate infinite;
@@ -379,7 +377,6 @@
       100% { transform: translate(1px,-1px); }
     }
 
-    /* 폭주 전체 배경 펄스 */
     body.frenzy-bg {
       animation: frenzyPulse 0.8s ease-in-out 0s 6;
     }
@@ -390,7 +387,6 @@
       100% { background-color: #05050a; }
     }
 
-    /* 폭주 텍스트 잔떨림 */
     .frenzy-text {
       animation: jitter 0.05s infinite;
     }
@@ -403,7 +399,6 @@
       100% { transform: translate(1px,1px); }
     }
 
-    /* AUX 패널 */
     .info-panel {
       width: 90%;
       max-width: 760px;
@@ -508,7 +503,7 @@
 
     .cctv-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr)); /* 4x2 = 8개 */
+      grid-template-columns: repeat(4, minmax(0, 1fr)); 
       gap: 10px;
       margin-top: 10px;
     }
@@ -1042,7 +1037,6 @@
   </div>
 
   <script>
-    // 감정 키워드 → 내부 타입 매핑
     const emotionTypeMap = {
       // 기본 감정
       "사랑": "love",
@@ -1068,7 +1062,6 @@
       "엔젤": "angel"
     };
 
-    // 실제 출력 메시지들
     const emotionDescriptions = {
       // 사랑
       love: {
@@ -1142,7 +1135,7 @@
         ko: "VoxTek 경고: …젠장. 내 회사, 내 제국, 내 이미지——전부 네게 넘어갔다는 걸 내가 인정해야 한다고? 웃기지 마."
       },
 
-      // 상어 (SHOK.WAV)
+      // 상어
       shark: {
         en: "VoxTek marine note: SHOK.WAV, who's the biggest and deadliest boy? …Yeah, you are.",
         ko: "VoxTek 해양 노트: SHOK.WAV, 세상에서 제일 크고 멋진 녀석은 누구야? …맞아, 너지."
@@ -1173,7 +1166,6 @@
     const emotionMain = document.querySelector(".panel");
     const essBar = document.getElementById("ess-bar");
 
-    // 콘솔 로그 출력 (타자기 효과 제거 버전)
     function typeLog(mainText, afterNode, hasFrenzyOverlay) {
       logBox.textContent = mainText;
 
@@ -1188,7 +1180,6 @@
       }
     }
 
-    // 간단 비프 사운드
     function playBeep(isAlastor = false) {
       try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -1263,7 +1254,6 @@
       lastSignal.textContent = "LAST SIGNAL: " + (emotionText || "---");
     }
 
-    // Emotion Firewall 메인 로직
     function triggerEmotion() {
       const input = document.getElementById("emotionInput");
       const emotion = input.value.trim();
@@ -1272,10 +1262,9 @@
         .toISOString().replace("T", " ").split(".")[0];
 
       // 초기화
-      logBox.className = "card";
-      logBox.classList.remove("vox-mode", "alastor-mode", "shake", "frenzy-mode", "scanline");
-      document.body.classList.remove("alastor-flash", "frenzy-bg");
-      logBox.textContent = "";
+logBox.className = "card";
+document.body.classList.remove("alastor-flash", "frenzy-bg");
+logBox.textContent = "";
 
       const type = emotionTypeMap[emotion];
       const isEmpty = !emotion;
@@ -1456,7 +1445,6 @@ End of Report
     }
 
     // CCTV 패널
-    let cctvInitialized = false;
 
     function renderCCTVLoading() {
       infoTitle.textContent = "CCTV // ROUTING";
@@ -1511,7 +1499,6 @@ End of Report
           openCamera(parseInt(m.getAttribute("data-cam"), 10));
         });
       });
-      cctvInitialized = true;
     }
 
     function openCamera(cam) {
@@ -1597,14 +1584,12 @@ End of Report
       setTimeout(() => { renderCCTVPanel(); }, 800);
     });
 
-    // 패널 밖 클릭 시 닫기
     document.addEventListener("click", (e) => {
       const withinPanel = infoPanel.contains(e.target);
       const withinButtons = e.target.closest(".top-controls");
       if (!withinPanel && !withinButtons) closePanel();
     });
 
-    /* ====== V-SYNC ACCESS PROTOCOL 로딩 시퀀스 ====== */
     (function () {
       const lines = document.querySelectorAll(".loading-line");
       const loadingScreen = document.getElementById("loading-screen");
@@ -1617,7 +1602,6 @@ End of Report
           step++;
           setTimeout(showStep, 900);
         } else {
-          // 마지막 문구까지 다 나온 후, 상태를 IDLE로 세팅하고 화면 전환
           setStatus("idle");
 
           setTimeout(() => {
@@ -1638,7 +1622,6 @@ End of Report
       if (lines.length && loadingScreen && app) {
         showStep();
       } else {
-        // 혹시 로딩 화면이 없으면 바로 앱 표시
         if (app) app.classList.add("active");
         setStatus("idle");
       }
@@ -1646,6 +1629,3 @@ End of Report
   </script>
 </body>
 </html>
-
-
-
