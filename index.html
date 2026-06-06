@@ -1232,7 +1232,28 @@
       } catch (e) {}
     }
 
+    let essResetTimer = null;
+
+    function clearEssResetTimer() {
+      if (essResetTimer) {
+        clearTimeout(essResetTimer);
+        essResetTimer = null;
+      }
+    }
+
+    function scheduleEssIdle(delay = 1600) {
+      if (!essBar) return;
+      clearEssResetTimer();
+
+      essResetTimer = setTimeout(() => {
+        essBar.className = "ess-bar ess-idle";
+        essResetTimer = null;
+      }, delay);
+    }
+
     function setStatus(mode, emotionText) {
+      clearEssResetTimer();
+
       if (mode === "error") {
         statusPill.className = "status-pill pill-error";
         statusPill.textContent = "STATUS: BLOCKED";
@@ -1325,6 +1346,10 @@ End of Report
         typeLog(baseText, wrap, isFrenzy);
 
         setStatus("error", emotion);
+
+        // ESS 오버히트 바는 경고 연출만 보여준 뒤 기본 스캔 상태로 복귀
+        // STATUS: BLOCKED와 LAST SIGNAL은 로그 상태로 남겨둠
+        scheduleEssIdle(isFrenzy ? 2500 : isAlastor ? 1000 : 1600);
 
         if (isAlastor) {
           playAlastorBGM();
@@ -1618,8 +1643,3 @@ End of Report
   </script>
 </body>
 </html>
-
-
-
-
-
